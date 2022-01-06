@@ -3,6 +3,7 @@
 ```
 module "examplecom" {
   source               = "git@github.com:vicktornl/terraform-module-static-website.git"
+  prefix               = "examplecom"
   zone_id              = aws_route53_zone.main.zone_id
   domain_name          = "example.com"
   redirect_domain_name = "www.example.com"
