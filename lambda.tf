@@ -6,7 +6,7 @@ data "template_file" "handler_basic_auth" {
 }
 
 data "template_file" "handler_index" {
-  template = templatefile("${path.module}/templates/indexh.js", {})
+  template = templatefile("${path.module}/templates/index.js", {})
 }
 
 data "archive_file" "lambda_basic_auth" {
@@ -34,7 +34,7 @@ resource "aws_lambda_function" "basic_auth" {
   provider         = "aws.virginia"
   filename         = "${path.module}/lambdas/basic-auth.zip"
   function_name    = "${var.prefix}-basic-auth"
-  role             = aws_iam_role.lambda.0.arn
+  role             = aws_iam_role.lambda_basic_auth.arn
   handler          = "basic-auth.handler"
   source_code_hash = data.archive_file.lambda_basic_auth.output_base64sha256
   runtime          = "nodejs12.x"
@@ -46,7 +46,7 @@ resource "aws_lambda_function" "index" {
   provider         = "aws.virginia"
   filename         = "${path.module}/lambdas/index.zip"
   function_name    = "${var.prefix}-index"
-  role             = aws_iam_role.lambda.0.arn
+  role             = aws_iam_role.lambda_index.arn
   handler          = "index.handler"
   source_code_hash = data.archive_file.lambda_index.output_base64sha256
   runtime          = "nodejs12.x"

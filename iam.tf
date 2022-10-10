@@ -1,6 +1,4 @@
 data "aws_iam_policy_document" "lambda_assume_role" {
-  count = var.basic_auth_enabled ? 1 : 0
-
   statement {
     effect = "Allow"
 
@@ -15,8 +13,12 @@ data "aws_iam_policy_document" "lambda_assume_role" {
   }
 }
 
-resource "aws_iam_role" "lambda" {
-  count              = var.basic_auth_enabled ? 1 : 0
-  name               = "${var.prefix}-lambda"
-  assume_role_policy = data.aws_iam_policy_document.lambda_assume_role.0.json
+resource "aws_iam_role" "lambda_basic_auth" {
+  name               = "${var.prefix}-lambda-basic-auth"
+  assume_role_policy = data.aws_iam_policy_document.lambda_assume_role.json
+}
+
+resource "aws_iam_role" "lambda_index" {
+  name               = "${var.prefix}-lambda-index"
+  assume_role_policy = data.aws_iam_policy_document.lambda_assume_role.json
 }
