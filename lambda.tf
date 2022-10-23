@@ -6,7 +6,9 @@ data "template_file" "handler_basic_auth" {
 }
 
 data "template_file" "handler_index" {
-  template = templatefile("${path.module}/templates/index.js", {})
+  template = templatefile("${path.module}/templates/index.js", {
+    rewrite_uri = var.rewrite_uri,
+  })
 }
 
 data "archive_file" "lambda_basic_auth" {

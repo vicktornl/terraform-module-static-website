@@ -63,3 +63,15 @@ variable "basic_auth_password" {
   default     = "auth"
   description = "Basic auth password"
 }
+
+variable "cache_enabled" {
+  type        = bool
+  default     = false
+  description = "Controls wether caching is enabled"
+}
+
+variable "rewrite_uri" {
+  type        = string
+  default     = ""
+  description = "Rewrite all trafic to this absolute uri (commonly used for React websites with History pushState routing)"
+}
