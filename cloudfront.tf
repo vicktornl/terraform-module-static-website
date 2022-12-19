@@ -81,7 +81,7 @@ resource "aws_cloudfront_distribution" "redirect" {
   count = var.redirect_domain_name != "null" ? 1 : 0
 
   origin {
-    domain_name = "${var.redirect_domain_name}.s3-website-eu-west-1.amazonaws.com"
+    domain_name = "${var.redirect_domain_name}.s3-website-${var.region}.amazonaws.com"
     origin_id   = "S3Origin"
 
     custom_origin_config {

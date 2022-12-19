@@ -3,6 +3,11 @@ variable "prefix" {
   description = "Prefix used for all resource names"
 }
 
+variable "region" {
+  type        = string
+  description = "Region name"
+}
+
 variable "zone_id" {
   type        = string
   description = "Hosted zone id"
