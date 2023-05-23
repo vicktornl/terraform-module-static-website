@@ -27,11 +27,26 @@ resource "aws_s3_bucket_acl" "main" {
 resource "aws_s3_bucket" "redirect" {
   count  = var.redirect_domain_name != "null" ? 1 : 0
   bucket = var.redirect_domain_name
-  acl    = "public-read"
 
   website {
     redirect_all_requests_to = "https://${var.domain_name}"
   }
+}
+
+resource "aws_s3_bucket_public_access_block" "redirect" {
+  count  = var.redirect_domain_name != "null" ? 1 : 0
+  bucket = aws_s3_bucket.redirect.0.id
+
+  block_public_acls       = false
+  block_public_policy     = false
+  ignore_public_acls      = false
+  restrict_public_buckets = false
+}
+
+resource "aws_s3_bucket_acl" "redirect" {
+  count  = var.redirect_domain_name != "null" ? 1 : 0
+  bucket = aws_s3_bucket.redirect.0.id
+  acl    = "public-read"
 }
 
 resource "aws_s3_bucket_object" "index" {
