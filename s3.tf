@@ -12,12 +12,16 @@ data "template_file" "error" {
 
 resource "aws_s3_bucket" "main" {
   bucket = var.domain_name
-  acl    = "private"
 
   website {
     index_document = var.index_document
     error_document = var.error_document
   }
+}
+
+resource "aws_s3_bucket_acl" "main" {
+  bucket = aws_s3_bucket.main.id
+  acl    = "private"
 }
 
 resource "aws_s3_bucket" "redirect" {
